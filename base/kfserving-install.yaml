@@ -1,0 +1,612 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/component: kfserving-install
+    app.kubernetes.io/instance: kfserving-install-v0.7.0
+    app.kubernetes.io/managed-by: kfctl
+    app.kubernetes.io/name: kfserving-install
+    app.kubernetes.io/part-of: kubeflow
+    app.kubernetes.io/version: v0.7.0
+    kustomize.component: kfserving
+  name: kfserving-proxy-role
+rules:
+- apiGroups:
+  - authentication.k8s.io
+  resources:
+  - tokenreviews
+  verbs:
+  - create
+- apiGroups:
+  - authorization.k8s.io
+  resources:
+  - subjectaccessreviews
+  verbs:
+  - create
+---
+aggregationRule:
+  clusterRoleSelectors:
+  - matchLabels:
+      rbac.authorization.kubeflow.org/aggregate-to-kubeflow-kfserving-admin: "true"
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/component: kfserving-install
+    app.kubernetes.io/instance: kfserving-install-v0.7.0
+    app.kubernetes.io/managed-by: kfctl
+    app.kubernetes.io/name: kfserving-install
+    app.kubernetes.io/part-of: kubeflow
+    app.kubernetes.io/version: v0.7.0
+    kustomize.component: kfserving
+    rbac.authorization.kubeflow.org/aggregate-to-kubeflow-admin: "true"
+  name: kubeflow-kfserving-admin
+rules: []
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/component: kfserving-install
+    app.kubernetes.io/instance: kfserving-install-v0.7.0
+    app.kubernetes.io/managed-by: kfctl
+    app.kubernetes.io/name: kfserving-install
+    app.kubernetes.io/part-of: kubeflow
+    app.kubernetes.io/version: v0.7.0
+    kustomize.component: kfserving
+    rbac.authorization.kubeflow.org/aggregate-to-kubeflow-edit: "true"
+    rbac.authorization.kubeflow.org/aggregate-to-kubeflow-kfserving-admin: "true"
+  name: kubeflow-kfserving-edit
+rules:
+- apiGroups:
+  - serving.kubeflow.org
+  resources:
+  - inferenceservices
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - delete
+  - deletecollection
+  - patch
+  - update
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/component: kfserving-install
+    app.kubernetes.io/instance: kfserving-install-v0.7.0
+    app.kubernetes.io/managed-by: kfctl
+    app.kubernetes.io/name: kfserving-install
+    app.kubernetes.io/part-of: kubeflow
+    app.kubernetes.io/version: v0.7.0
+    kustomize.component: kfserving
+    rbac.authorization.kubeflow.org/aggregate-to-kubeflow-view: "true"
+  name: kubeflow-kfserving-view
+rules:
+- apiGroups:
+  - serving.kubeflow.org
+  resources:
+  - inferenceservices
+  verbs:
+  - get
+  - list
+  - watch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  creationTimestamp: null
+  labels:
+    app.kubernetes.io/component: kfserving-install
+    app.kubernetes.io/instance: kfserving-install-v0.7.0
+    app.kubernetes.io/managed-by: kfctl
+    app.kubernetes.io/name: kfserving-install
+    app.kubernetes.io/part-of: kubeflow
+    app.kubernetes.io/version: v0.7.0
+    kustomize.component: kfserving
+  name: manager-role
+rules:
+- apiGroups:
+  - serving.knative.dev
+  resources:
+  - services
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - serving.knative.dev
+  resources:
+  - services/status
+  verbs:
+  - get
+  - update
+  - patch
+- apiGroups:
+  - networking.istio.io
+  resources:
+  - virtualservices
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - networking.istio.io
+  resources:
+  - virtualservices/status
+  verbs:
+  - get
+  - update
+  - patch
+- apiGroups:
+  - serving.kubeflow.org
+  resources:
+  - inferenceservices
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - serving.kubeflow.org
+  resources:
+  - inferenceservices/status
+  verbs:
+  - get
+  - update
+  - patch
+- apiGroups:
+  - ""
+  resources:
+  - serviceaccounts
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - secrets
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - admissionregistration.k8s.io
+  resources:
+  - mutatingwebhookconfigurations
+  - validatingwebhookconfigurations
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - ""
+  resources:
+  - secrets
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - ""
+  resources:
+  - services
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - patch
+  - delete
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    app.kubernetes.io/component: kfserving-install
+    app.kubernetes.io/instance: kfserving-install-v0.7.0
+    app.kubernetes.io/managed-by: kfctl
+    app.kubernetes.io/name: kfserving-install
+    app.kubernetes.io/part-of: kubeflow
+    app.kubernetes.io/version: v0.7.0
+    kustomize.component: kfserving
+  name: kfserving-proxy-rolebinding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: kfserving-proxy-role
+subjects:
+- kind: ServiceAccount
+  name: default
+  namespace: kubeflow
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  creationTimestamp: null
+  labels:
+    app.kubernetes.io/component: kfserving-install
+    app.kubernetes.io/instance: kfserving-install-v0.7.0
+    app.kubernetes.io/managed-by: kfctl
+    app.kubernetes.io/name: kfserving-install
+    app.kubernetes.io/part-of: kubeflow
+    app.kubernetes.io/version: v0.7.0
+    kustomize.component: kfserving
+  name: manager-rolebinding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: manager-role
+subjects:
+- kind: ServiceAccount
+  name: default
+  namespace: kubeflow
+---
+apiVersion: v1
+data:
+  credentials: |-
+    {
+       "gcs": {
+           "gcsCredentialFileName": "gcloud-application-credentials.json"
+       },
+       "s3": {
+           "s3AccessKeyIDName": "awsAccessKeyID",
+           "s3SecretAccessKeyName": "awsSecretAccessKey"
+       }
+    }
+  explainers: |-
+    {
+        "image" : "docker.io/seldonio/alibiexplainer",
+        "defaultImageVersion": "0.2.3",
+        "allowedImageVersions": [
+           "0.2.3"
+        ]
+    }
+  ingress: |-
+    {
+        "ingressGateway" : "knative-ingress-gateway.knative-serving",
+        "ingressService" : "istio-ingressgateway.istio-system.svc.cluster.local"
+    }
+  predictors: |-
+    {
+        "tensorflow": {
+            "image": "tensorflow/serving",
+            "defaultImageVersion": "1.14.0",
+            "defaultGpuImageVersion": "1.14.0-gpu",
+            "allowedImageVersions": [
+               "latest",
+               "latest-gpu",
+               "1.11.0",
+               "1.11.0-gpu",
+               "1.12.0",
+               "1.12.0-gpu",
+               "1.13.0",
+               "1.13.0-gpu",
+               "1.14.0",
+               "1.14.0-gpu"
+            ]
+        },
+        "onnx": {
+            "image": "mcr.microsoft.com/onnxruntime/server",
+            "defaultImageVersion": "v0.5.0",
+            "allowedImageVersions": [
+               "latest",
+               "v0.5.0"
+            ]
+        },
+        "sklearn": {
+            "image": "gcr.io/kfserving/sklearnserver",
+            "defaultImageVersion": "0.2.0",
+            "allowedImageVersions": [
+               "latest",
+               "0.2.0"
+            ]
+        },
+        "xgboost": {
+            "image": "gcr.io/kfserving/xgbserver",
+            "defaultImageVersion": "0.2.0",
+            "allowedImageVersions": [
+               "latest",
+               "0.2.0"
+            ]
+        },
+        "pytorch": {
+            "image": "gcr.io/kfserving/pytorchserver",
+            "defaultImageVersion": "0.2.0",
+            "allowedImageVersions": [
+               "latest",
+               "0.2.0"
+            ]
+        },
+        "tensorrt": {
+            "image": "nvcr.io/nvidia/tensorrtserver",
+            "defaultImageVersion": "19.05-py3",
+            "allowedImageVersions": [
+               "19.05-py3"
+            ]
+        }
+    }
+  storageInitializer: |-
+    {
+        "image" : "gcr.io/kfserving/storage-initializer:0.2.0"
+    }
+  transformers: |-
+    {
+    }
+kind: ConfigMap
+metadata:
+  labels:
+    app.kubernetes.io/component: kfserving-install
+    app.kubernetes.io/instance: kfserving-install-v0.7.0
+    app.kubernetes.io/managed-by: kfctl
+    app.kubernetes.io/name: kfserving-install
+    app.kubernetes.io/part-of: kubeflow
+    app.kubernetes.io/version: v0.7.0
+    kustomize.component: kfserving
+  name: inferenceservice-config
+  namespace: kubeflow
+---
+apiVersion: v1
+data:
+  registry: gcr.io/kfserving
+kind: ConfigMap
+metadata:
+  labels:
+    app.kubernetes.io/component: kfserving-install
+    app.kubernetes.io/instance: kfserving-install-v0.7.0
+    app.kubernetes.io/managed-by: kfctl
+    app.kubernetes.io/name: kfserving-install
+    app.kubernetes.io/part-of: kubeflow
+    app.kubernetes.io/version: v0.7.0
+    kustomize.component: kfserving
+  name: kfserving-parameters-dbdb8cm9t2
+  namespace: kubeflow
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  labels:
+    app.kubernetes.io/component: kfserving-install
+    app.kubernetes.io/instance: kfserving-install-v0.7.0
+    app.kubernetes.io/managed-by: kfctl
+    app.kubernetes.io/name: kfserving-install
+    app.kubernetes.io/part-of: kubeflow
+    app.kubernetes.io/version: v0.7.0
+    kustomize.component: kfserving
+  name: kfserving-webhook-server-secret
+  namespace: kubeflow
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    prometheus.io/port: "8443"
+    prometheus.io/scheme: https
+    prometheus.io/scrape: "true"
+  labels:
+    app.kubernetes.io/component: kfserving-install
+    app.kubernetes.io/instance: kfserving-install-v0.7.0
+    app.kubernetes.io/managed-by: kfctl
+    app.kubernetes.io/name: kfserving-install
+    app.kubernetes.io/part-of: kubeflow
+    app.kubernetes.io/version: v0.7.0
+    control-plane: controller-manager
+    controller-tools.k8s.io: "1.0"
+    kustomize.component: kfserving
+  name: kfserving-controller-manager-metrics-service
+  namespace: kubeflow
+spec:
+  ports:
+  - name: https
+    port: 8443
+    targetPort: https
+  selector:
+    app.kubernetes.io/component: kfserving-install
+    app.kubernetes.io/instance: kfserving-install-v0.7.0
+    app.kubernetes.io/managed-by: kfctl
+    app.kubernetes.io/name: kfserving-install
+    app.kubernetes.io/part-of: kubeflow
+    app.kubernetes.io/version: v0.7.0
+    control-plane: controller-manager
+    controller-tools.k8s.io: "1.0"
+    kustomize.component: kfserving
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/component: kfserving-install
+    app.kubernetes.io/instance: kfserving-install-v0.7.0
+    app.kubernetes.io/managed-by: kfctl
+    app.kubernetes.io/name: kfserving-install
+    app.kubernetes.io/part-of: kubeflow
+    app.kubernetes.io/version: v0.7.0
+    control-plane: kfserving-controller-manager
+    controller-tools.k8s.io: "1.0"
+    kustomize.component: kfserving
+  name: kfserving-controller-manager-service
+  namespace: kubeflow
+spec:
+  ports:
+  - port: 443
+  selector:
+    app.kubernetes.io/component: kfserving-install
+    app.kubernetes.io/instance: kfserving-install-v0.7.0
+    app.kubernetes.io/managed-by: kfctl
+    app.kubernetes.io/name: kfserving-install
+    app.kubernetes.io/part-of: kubeflow
+    app.kubernetes.io/version: v0.7.0
+    control-plane: kfserving-controller-manager
+    controller-tools.k8s.io: "1.0"
+    kustomize.component: kfserving
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app.kubernetes.io/component: kfserving-install
+    app.kubernetes.io/instance: kfserving-install-v0.7.0
+    app.kubernetes.io/managed-by: kfctl
+    app.kubernetes.io/name: kfserving-install
+    app.kubernetes.io/part-of: kubeflow
+    app.kubernetes.io/version: v0.7.0
+    control-plane: kfserving-controller-manager
+    controller-tools.k8s.io: "1.0"
+    kustomize.component: kfserving
+  name: kfserving-controller-manager
+  namespace: kubeflow
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: kfserving-install
+      app.kubernetes.io/instance: kfserving-install-v0.7.0
+      app.kubernetes.io/managed-by: kfctl
+      app.kubernetes.io/name: kfserving-install
+      app.kubernetes.io/part-of: kubeflow
+      app.kubernetes.io/version: v0.7.0
+      control-plane: kfserving-controller-manager
+      controller-tools.k8s.io: "1.0"
+      kustomize.component: kfserving
+  serviceName: controller-manager-service
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: kfserving-install
+        app.kubernetes.io/instance: kfserving-install-v0.7.0
+        app.kubernetes.io/managed-by: kfctl
+        app.kubernetes.io/name: kfserving-install
+        app.kubernetes.io/part-of: kubeflow
+        app.kubernetes.io/version: v0.7.0
+        control-plane: kfserving-controller-manager
+        controller-tools.k8s.io: "1.0"
+        kustomize.component: kfserving
+    spec:
+      containers:
+      - args:
+        - --secure-listen-address=0.0.0.0:8443
+        - --upstream=http://127.0.0.1:8080/
+        - --logtostderr=true
+        - --v=10
+        image: gcr.io/kubebuilder/kube-rbac-proxy:v0.4.0
+        name: kube-rbac-proxy
+        ports:
+        - containerPort: 8443
+          name: https
+      - args:
+        - --metrics-addr=127.0.0.1:8080
+        command:
+        - /manager
+        env:
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: SECRET_NAME
+          value: kfserving-webhook-server-secret
+        image: gcr.io/kfserving/kfserving-controller@sha256:180d06026c4dd6c2d3ce4748efc896751b9bb6108b67a9eaa0e50158d6e10f1e
+        imagePullPolicy: Always
+        name: manager
+        ports:
+        - containerPort: 9876
+          name: webhook-server
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 100m
+            memory: 300Mi
+          requests:
+            cpu: 100m
+            memory: 200Mi
+        volumeMounts:
+        - mountPath: /tmp/cert
+          name: cert
+          readOnly: true
+      terminationGracePeriodSeconds: 10
+      volumes:
+      - name: cert
+        secret:
+          defaultMode: 420
+          secretName: kfserving-webhook-server-secret
+  volumeClaimTemplates: []
+---
+apiVersion: app.k8s.io/v1beta1
+kind: Application
+metadata:
+  labels:
+    app.kubernetes.io/component: kfserving-install
+    app.kubernetes.io/instance: kfserving-install-v0.7.0
+    app.kubernetes.io/managed-by: kfctl
+    app.kubernetes.io/name: kfserving-install
+    app.kubernetes.io/part-of: kubeflow
+    app.kubernetes.io/version: v0.7.0
+  name: kfserving
+  namespace: kubeflow
+spec:
+  componentKinds:
+  - group: apps/v1
+    kind: StatefulSet
+  - group: v1
+    kind: Service
+  - group: apps/v1
+    kind: Deployment
+  - group: v1
+    kind: Secret
+  - group: v1
+    kind: ConfigMap
+  description: KFServing provides a Kubernetes Custom Resource Definition for serving
+    ML Models on arbitrary frameworks
+  icons: null
+  keywords:
+  - kfserving
+  - inference
+  links:
+  - description: About
+    url: https://github.com/kubeflow/kfserving
+  maintainers:
+  - email: johnugeo@cisco.com
+    name: Johnu George
+  owners:
+  - email: johnugeo@cisco.com
+    name: Johnu George
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: kfserving-install
+      app.kubernetes.io/instance: kfserving-install-v0.7.0
+      app.kubernetes.io/managed-by: kfctl
+      app.kubernetes.io/name: kfserving-install
+      app.kubernetes.io/part-of: kubeflow
+      app.kubernetes.io/version: v0.7.0
+  type: kfserving
+  version: v1alpha2

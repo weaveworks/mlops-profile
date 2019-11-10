@@ -1,0 +1,188 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    app.kubernetes.io/component: kubeflow
+    app.kubernetes.io/instance: kubeflow-v0.7.0
+    app.kubernetes.io/managed-by: kfctl
+    app.kubernetes.io/name: kubeflow
+    app.kubernetes.io/part-of: kubeflow
+    app.kubernetes.io/version: v0.7.0
+  name: application-controller-service-account
+  namespace: kubeflow
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/component: kubeflow
+    app.kubernetes.io/instance: kubeflow-v0.7.0
+    app.kubernetes.io/managed-by: kfctl
+    app.kubernetes.io/name: kubeflow
+    app.kubernetes.io/part-of: kubeflow
+    app.kubernetes.io/version: v0.7.0
+  name: application-controller-cluster-role
+rules:
+- apiGroups:
+  - '*'
+  resources:
+  - '*'
+  verbs:
+  - get
+  - list
+  - update
+  - patch
+  - watch
+- apiGroups:
+  - app.k8s.io
+  resources:
+  - '*'
+  verbs:
+  - '*'
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    app.kubernetes.io/component: kubeflow
+    app.kubernetes.io/instance: kubeflow-v0.7.0
+    app.kubernetes.io/managed-by: kfctl
+    app.kubernetes.io/name: kubeflow
+    app.kubernetes.io/part-of: kubeflow
+    app.kubernetes.io/version: v0.7.0
+  name: application-controller-cluster-role-binding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: application-controller-cluster-role
+subjects:
+- kind: ServiceAccount
+  name: application-controller-service-account
+  namespace: kubeflow
+---
+apiVersion: v1
+data:
+  project: kubeflow-profile
+kind: ConfigMap
+metadata:
+  labels:
+    app.kubernetes.io/component: kubeflow
+    app.kubernetes.io/instance: kubeflow-v0.7.0
+    app.kubernetes.io/managed-by: kfctl
+    app.kubernetes.io/name: kubeflow
+    app.kubernetes.io/part-of: kubeflow
+    app.kubernetes.io/version: v0.7.0
+  name: application-controller-parameters
+  namespace: kubeflow
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/component: kubeflow
+    app.kubernetes.io/instance: kubeflow-v0.7.0
+    app.kubernetes.io/managed-by: kfctl
+    app.kubernetes.io/name: kubeflow
+    app.kubernetes.io/part-of: kubeflow
+    app.kubernetes.io/version: v0.7.0
+  name: application-controller-service
+  namespace: kubeflow
+spec:
+  ports:
+  - port: 443
+  selector:
+    app.kubernetes.io/component: kubeflow
+    app.kubernetes.io/instance: kubeflow-v0.7.0
+    app.kubernetes.io/managed-by: kfctl
+    app.kubernetes.io/name: kubeflow
+    app.kubernetes.io/part-of: kubeflow
+    app.kubernetes.io/version: v0.7.0
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app.kubernetes.io/component: kubeflow
+    app.kubernetes.io/instance: kubeflow-v0.7.0
+    app.kubernetes.io/managed-by: kfctl
+    app.kubernetes.io/name: kubeflow
+    app.kubernetes.io/part-of: kubeflow
+    app.kubernetes.io/version: v0.7.0
+  name: application-controller-stateful-set
+  namespace: kubeflow
+spec:
+  selector:
+    matchLabels:
+      app: application-controller
+      app.kubernetes.io/component: kubeflow
+      app.kubernetes.io/instance: kubeflow-v0.7.0
+      app.kubernetes.io/managed-by: kfctl
+      app.kubernetes.io/name: kubeflow
+      app.kubernetes.io/part-of: kubeflow
+      app.kubernetes.io/version: v0.7.0
+  serviceName: application-controller-service
+  template:
+    metadata:
+      labels:
+        app: application-controller
+        app.kubernetes.io/component: kubeflow
+        app.kubernetes.io/instance: kubeflow-v0.7.0
+        app.kubernetes.io/managed-by: kfctl
+        app.kubernetes.io/name: kubeflow
+        app.kubernetes.io/part-of: kubeflow
+        app.kubernetes.io/version: v0.7.0
+    spec:
+      containers:
+      - command:
+        - /root/manager
+        env:
+        - name: project
+          value: kubeflow-profile
+        image: gcr.io/kubeflow-images-public/kubernetes-sigs/application:1.0-beta
+        imagePullPolicy: Always
+        name: manager
+      serviceAccountName: application-controller-service-account
+  volumeClaimTemplates: []
+---
+apiVersion: app.k8s.io/v1beta1
+kind: Application
+metadata:
+  labels:
+    app.kubernetes.io/component: kubeflow
+    app.kubernetes.io/instance: kubeflow-v0.7.0
+    app.kubernetes.io/managed-by: kfctl
+    app.kubernetes.io/name: kubeflow
+    app.kubernetes.io/part-of: kubeflow
+    app.kubernetes.io/version: v0.7.0
+  name: kubeflow
+  namespace: kubeflow
+spec:
+  addOwnerRef: true
+  componentKinds:
+  - group: app.k8s.io
+    kind: Application
+  descriptor:
+    description: application that aggregates all kubeflow applications
+    keywords:
+    - kubeflow
+    links:
+    - description: About
+      url: https://kubeflow.org
+    maintainers:
+    - email: jlewi@google.com
+      name: Jeremy Lewi
+    - email: kam.d.kasravi@intel.com
+      name: Kam Kasravi
+    owners:
+    - email: jlewi@google.com
+      name: Jeremy Lewi
+    type: kubeflow
+    version: v1beta1
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: kubeflow
+      app.kubernetes.io/instance: kubeflow-v0.7.0
+      app.kubernetes.io/managed-by: kfctl
+      app.kubernetes.io/name: kubeflow
+      app.kubernetes.io/part-of: kubeflow
+      app.kubernetes.io/version: v0.7.0

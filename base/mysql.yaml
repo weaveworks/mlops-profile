@@ -1,0 +1,153 @@
+apiVersion: v1
+data:
+  mysqlPvcName: mysql-pv-claim
+kind: ConfigMap
+metadata:
+  labels:
+    app: mysql
+    app.kubernetes.io/component: mysql
+    app.kubernetes.io/instance: mysql-0.1.31
+    app.kubernetes.io/managed-by: kfctl
+    app.kubernetes.io/name: mysql
+    app.kubernetes.io/part-of: kubeflow
+    app.kubernetes.io/version: 0.1.31
+  name: pipeline-mysql-parameters
+  namespace: kubeflow
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: mysql
+    app.kubernetes.io/component: mysql
+    app.kubernetes.io/instance: mysql-0.1.31
+    app.kubernetes.io/managed-by: kfctl
+    app.kubernetes.io/name: mysql
+    app.kubernetes.io/part-of: kubeflow
+    app.kubernetes.io/version: 0.1.31
+  name: mysql
+  namespace: kubeflow
+spec:
+  ports:
+  - port: 3306
+  selector:
+    app: mysql
+    app.kubernetes.io/component: mysql
+    app.kubernetes.io/instance: mysql-0.1.31
+    app.kubernetes.io/managed-by: kfctl
+    app.kubernetes.io/name: mysql
+    app.kubernetes.io/part-of: kubeflow
+    app.kubernetes.io/version: 0.1.31
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: mysql
+    app.kubernetes.io/component: mysql
+    app.kubernetes.io/instance: mysql-0.1.31
+    app.kubernetes.io/managed-by: kfctl
+    app.kubernetes.io/name: mysql
+    app.kubernetes.io/part-of: kubeflow
+    app.kubernetes.io/version: 0.1.31
+  name: mysql
+  namespace: kubeflow
+spec:
+  selector:
+    matchLabels:
+      app: mysql
+      app.kubernetes.io/component: mysql
+      app.kubernetes.io/instance: mysql-0.1.31
+      app.kubernetes.io/managed-by: kfctl
+      app.kubernetes.io/name: mysql
+      app.kubernetes.io/part-of: kubeflow
+      app.kubernetes.io/version: 0.1.31
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mysql
+        app.kubernetes.io/component: mysql
+        app.kubernetes.io/instance: mysql-0.1.31
+        app.kubernetes.io/managed-by: kfctl
+        app.kubernetes.io/name: mysql
+        app.kubernetes.io/part-of: kubeflow
+        app.kubernetes.io/version: 0.1.31
+    spec:
+      containers:
+      - env:
+        - name: MYSQL_ALLOW_EMPTY_PASSWORD
+          value: "true"
+        image: mysql:5.6
+        name: mysql
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
+        - mountPath: /var/lib/mysql
+          name: mysql-persistent-storage
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: mysql-pv-claim
+---
+apiVersion: app.k8s.io/v1beta1
+kind: Application
+metadata:
+  labels:
+    app.kubernetes.io/component: mysql
+    app.kubernetes.io/instance: mysql-0.1.31
+    app.kubernetes.io/managed-by: kfctl
+    app.kubernetes.io/name: mysql
+    app.kubernetes.io/part-of: kubeflow
+    app.kubernetes.io/version: 0.1.31
+  name: mysql
+  namespace: kubeflow
+spec:
+  addOwnerRef: true
+  componentKinds:
+  - group: core
+    kind: ConfigMap
+  - group: apps
+    kind: Deployment
+  descriptor:
+    description: ""
+    keywords:
+    - mysql
+    - kubeflow
+    links:
+    - description: About
+      url: ""
+    maintainers: []
+    owners: []
+    type: mysql
+    version: v1beta1
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: mysql
+      app.kubernetes.io/instance: mysql-0.1.31
+      app.kubernetes.io/managed-by: kfctl
+      app.kubernetes.io/name: mysql
+      app.kubernetes.io/part-of: kubeflow
+      app.kubernetes.io/version: 0.1.31
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    app: mysql
+    app.kubernetes.io/component: mysql
+    app.kubernetes.io/instance: mysql-0.1.31
+    app.kubernetes.io/managed-by: kfctl
+    app.kubernetes.io/name: mysql
+    app.kubernetes.io/part-of: kubeflow
+    app.kubernetes.io/version: 0.1.31
+  name: mysql-pv-claim
+  namespace: kubeflow
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi

@@ -1,0 +1,180 @@
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  labels:
+    app.kubernetes.io/component: katib
+    app.kubernetes.io/instance: katib-crds-v0.7.0
+    app.kubernetes.io/managed-by: kfctl
+    app.kubernetes.io/name: katib-crds
+    app.kubernetes.io/part-of: kubeflow
+    app.kubernetes.io/version: v0.7.0
+  name: experiments.kubeflow.org
+spec:
+  additionalPrinterColumns:
+  - JSONPath: .status.conditions[-1:].type
+    name: Status
+    type: string
+  - JSONPath: .metadata.creationTimestamp
+    name: Age
+    type: date
+  group: kubeflow.org
+  names:
+    categories:
+    - all
+    - kubeflow
+    - katib
+    kind: Experiment
+    plural: experiments
+    singular: experiment
+  scope: Namespaced
+  subresources:
+    status: {}
+  version: v1alpha3
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  labels:
+    app.kubernetes.io/component: katib
+    app.kubernetes.io/instance: katib-crds-v0.7.0
+    app.kubernetes.io/managed-by: kfctl
+    app.kubernetes.io/name: katib-crds
+    app.kubernetes.io/part-of: kubeflow
+    app.kubernetes.io/version: v0.7.0
+  name: suggestions.kubeflow.org
+spec:
+  additionalPrinterColumns:
+  - JSONPath: .status.conditions[-1:].type
+    name: Type
+    type: string
+  - JSONPath: .status.conditions[-1:].status
+    name: Status
+    type: string
+  - JSONPath: .spec.requests
+    name: Requested
+    type: string
+  - JSONPath: .status.suggestionCount
+    name: Assigned
+    type: string
+  - JSONPath: .metadata.creationTimestamp
+    name: Age
+    type: date
+  group: kubeflow.org
+  names:
+    categories:
+    - all
+    - kubeflow
+    - katib
+    kind: Suggestion
+    plural: suggestions
+    singular: suggestion
+  scope: Namespaced
+  subresources:
+    status: {}
+  version: v1alpha3
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  labels:
+    app.kubernetes.io/component: katib
+    app.kubernetes.io/instance: katib-crds-v0.7.0
+    app.kubernetes.io/managed-by: kfctl
+    app.kubernetes.io/name: katib-crds
+    app.kubernetes.io/part-of: kubeflow
+    app.kubernetes.io/version: v0.7.0
+  name: trials.kubeflow.org
+spec:
+  additionalPrinterColumns:
+  - JSONPath: .status.conditions[-1:].type
+    name: Type
+    type: string
+  - JSONPath: .status.conditions[-1:].status
+    name: Status
+    type: string
+  - JSONPath: .metadata.creationTimestamp
+    name: Age
+    type: date
+  group: kubeflow.org
+  names:
+    categories:
+    - all
+    - kubeflow
+    - katib
+    kind: Trial
+    plural: trials
+    singular: trial
+  scope: Namespaced
+  subresources:
+    status: {}
+  version: v1alpha3
+---
+apiVersion: app.k8s.io/v1beta1
+kind: Application
+metadata:
+  labels:
+    app.kubernetes.io/component: katib
+    app.kubernetes.io/instance: katib-crds-v0.7.0
+    app.kubernetes.io/managed-by: kfctl
+    app.kubernetes.io/name: katib-crds
+    app.kubernetes.io/part-of: kubeflow
+    app.kubernetes.io/version: v0.7.0
+  name: katib-crds
+  namespace: kubeflow
+spec:
+  addOwnerRef: true
+  componentKinds:
+  - group: core
+    kind: Service
+  - group: apps
+    kind: Deployment
+  - group: core
+    kind: ServiceAccount
+  - group: kubeflow.org
+    kind: Experiment
+  - group: kubeflow.org
+    kind: Suggestion
+  - group: kubeflow.org
+    kind: Trial
+  descriptor:
+    description: Katib is a service for hyperparameter tuning and neural architecture
+      search.
+    keywords:
+    - katib
+    - katib-controller
+    - hyperparameter tuning
+    links:
+    - description: About
+      url: https://github.com/kubeflow/katib
+    maintainers:
+    - email: gaoce@caicloud.io
+      name: Ce Gao
+    - email: johnugeo@cisco.com
+      name: Johnu George
+    - email: liuhougang6@126.com
+      name: Hougang Liu
+    - email: ricliu@google.com
+      name: Richard Liu
+    - email: yuji.oshima0x3fd@gmail.com
+      name: YujiOshima
+    owners:
+    - email: gaoce@caicloud.io
+      name: Ce Gao
+    - email: johnugeo@cisco.com
+      name: Johnu George
+    - email: liuhougang6@126.com
+      name: Hougang Liu
+    - email: ricliu@google.com
+      name: Richard Liu
+    - email: yuji.oshima0x3fd@gmail.com
+      name: YujiOshima
+    type: katib
+    version: v1alpha3
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: katib
+      app.kubernetes.io/instance: katib-crds-v0.7.0
+      app.kubernetes.io/managed-by: kfctl
+      app.kubernetes.io/name: katib-crds
+      app.kubernetes.io/part-of: kubeflow
+      app.kubernetes.io/version: v0.7.0
