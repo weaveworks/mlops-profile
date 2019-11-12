@@ -2,3 +2,6 @@
 generate.sh
 kustomization.yaml
 
+# no Nvidia on Firekube
+nvidia/nvidia-device-plugin.yml
+
