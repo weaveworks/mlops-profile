@@ -1,0 +1,7 @@
+# unused scripts
+generate.sh
+kustomization.yaml
+
+# unused storage for EKS
+storageclass/local-path-storage.yaml
+
