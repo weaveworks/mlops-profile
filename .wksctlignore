@@ -5,3 +5,6 @@ kustomization.yaml
 # no Nvidia on Firekube
 nvidia/nvidia-device-plugin.yml
 
+# ignore eksctl ignore file
+.eksctlignore
+

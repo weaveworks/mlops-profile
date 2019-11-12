@@ -5,3 +5,6 @@ kustomization.yaml
 # unused storage for EKS
 storageclass/local-path-storage.yaml
 
+# also delete other ignore files
+.wksctlignore
+
