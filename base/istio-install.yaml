@@ -4464,7 +4464,7 @@ apiVersion: v1
 data:
   config: "policy: enabled\ntemplate: |-\n  rewriteAppHTTPProbe: false\n  initContainers:\n
     \ [[ if ne (annotation .ObjectMeta `sidecar.istio.io/interceptionMode` .ProxyConfig.InterceptionMode)
-    \"NONE\" ]]\n  - name: istio-init\n    image: \"docker.io/istio/proxy_init:1.1.6\"\n
+    \"NONE\" ]]\n  - name: istio-init\n    image: \"docker.io/istio/proxy_init:1.1.17\"\n
     \   args:\n    - \"-p\"\n    - [[ .MeshConfig.ProxyListenPort ]]\n    - \"-u\"\n
     \   - 1337\n    - \"-m\"\n    - [[ annotation .ObjectMeta `sidecar.istio.io/interceptionMode`
     .ProxyConfig.InterceptionMode ]]\n    - \"-i\"\n    - \"[[ annotation .ObjectMeta
@@ -4481,7 +4481,7 @@ data:
     50Mi\n    securityContext:\n      runAsUser: 0\n      runAsNonRoot: false\n      capabilities:\n
     \       add:\n        - NET_ADMIN\n    restartPolicy: Always\n  [[ end -]]\n  containers:\n
     \ - name: istio-proxy\n    image: [[ annotation .ObjectMeta `sidecar.istio.io/proxyImage`
-    \ \"docker.io/istio/proxyv2:1.1.6\"  ]]\n    ports:\n    - containerPort: 15090\n
+    \ \"docker.io/istio/proxyv2:1.1.17\"  ]]\n    ports:\n    - containerPort: 15090\n
     \     protocol: TCP\n      name: http-envoy-prom\n    args:\n    - proxy\n    -
     sidecar\n    - --domain\n    - $(POD_NAMESPACE).svc.cluster.local\n    - --configPath\n
     \   - [[ .ProxyConfig.ConfigPath ]]\n    - --binaryPath\n    - [[ .ProxyConfig.BinaryPath
@@ -5522,7 +5522,7 @@ spec:
         - --custom-dns-names=istio-pilot-service-account.istio-system:istio-pilot.istio-system
         - --monitoring-port=15014
         - --self-signed-ca=true
-        image: docker.io/istio/citadel:1.1.6
+        image: docker.io/istio/citadel:1.1.17
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
@@ -5656,7 +5656,7 @@ spec:
               fieldPath: metadata.namespace
         - name: ISTIO_META_ROUTER_MODE
           value: sni-dnat
-        image: docker.io/istio/proxyv2:1.1.6
+        image: docker.io/istio/proxyv2:1.1.17
         imagePullPolicy: IfNotPresent
         name: istio-proxy
         ports:
@@ -5792,7 +5792,7 @@ spec:
         - --monitoringPort=15014
         - --log_output_level=default:info
         - --enable-validation=true
-        image: docker.io/istio/galley:1.1.6
+        image: docker.io/istio/galley:1.1.17
         imagePullPolicy: IfNotPresent
         livenessProbe:
           exec:
@@ -5962,7 +5962,7 @@ spec:
               fieldPath: metadata.namespace
         - name: ISTIO_META_ROUTER_MODE
           value: sni-dnat
-        image: docker.io/istio/proxyv2:1.1.6
+        image: docker.io/istio/proxyv2:1.1.17
         imagePullPolicy: IfNotPresent
         name: istio-proxy
         ports:
@@ -6115,7 +6115,7 @@ spec:
           value: "100"
         - name: PILOT_DISABLE_XDS_MARSHALING_TO_ANY
           value: "1"
-        image: docker.io/istio/pilot:1.1.6
+        image: docker.io/istio/pilot:1.1.17
         imagePullPolicy: IfNotPresent
         name: discovery
         ports:
@@ -6167,7 +6167,7 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: status.podIP
-        image: docker.io/istio/proxyv2:1.1.6
+        image: docker.io/istio/proxyv2:1.1.17
         imagePullPolicy: IfNotPresent
         name: istio-proxy
         ports:
@@ -6276,7 +6276,7 @@ spec:
           value: gctrace=1
         - name: GOMAXPROCS
           value: "6"
-        image: docker.io/istio/mixer:1.1.6
+        image: docker.io/istio/mixer:1.1.17
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
@@ -6327,7 +6327,7 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: status.podIP
-        image: docker.io/istio/proxyv2:1.1.6
+        image: docker.io/istio/proxyv2:1.1.17
         imagePullPolicy: IfNotPresent
         name: istio-proxy
         ports:
@@ -6442,7 +6442,7 @@ spec:
         - --meshConfig=/etc/istio/config/mesh
         - --healthCheckInterval=2s
         - --healthCheckFile=/health
-        image: docker.io/istio/sidecar_injector:1.1.6
+        image: docker.io/istio/sidecar_injector:1.1.17
         imagePullPolicy: IfNotPresent
         livenessProbe:
           exec:
@@ -6575,7 +6575,7 @@ spec:
           value: gctrace=1
         - name: GOMAXPROCS
           value: "6"
-        image: docker.io/istio/mixer:1.1.6
+        image: docker.io/istio/mixer:1.1.17
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
@@ -6629,7 +6629,7 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: status.podIP
-        image: docker.io/istio/proxyv2:1.1.6
+        image: docker.io/istio/proxyv2:1.1.17
         imagePullPolicy: IfNotPresent
         name: istio-proxy
         ports:
@@ -7258,7 +7258,7 @@ spec:
             name=$(echo $entry | awk '{print $2}');
             kubectl delete secret $name -n $ns;
           done
-        image: docker.io/istio/kubectl:1.1.6
+        image: docker.io/istio/kubectl:1.1.17
         imagePullPolicy: IfNotPresent
         name: kubectl
       restartPolicy: OnFailure
@@ -7325,7 +7325,7 @@ spec:
         - /bin/bash
         - /tmp/grafana/run.sh
         - /tmp/grafana/custom-resources.yaml
-        image: docker.io/istio/kubectl:1.1.6
+        image: docker.io/istio/kubectl:1.1.17
         name: kubectl
         volumeMounts:
         - mountPath: /tmp/grafana
@@ -7398,7 +7398,7 @@ spec:
         - /bin/bash
         - /tmp/security/run.sh
         - /tmp/security/custom-resources.yaml
-        image: docker.io/istio/kubectl:1.1.6
+        image: docker.io/istio/kubectl:1.1.17
         imagePullPolicy: IfNotPresent
         name: kubectl
         volumeMounts:
