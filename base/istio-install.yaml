@@ -7203,7 +7203,7 @@ metadata:
     chart: security
     heritage: Tiller
     release: istio
-  name: istio-cleanup-secrets-1.1.6
+  name: istio-cleanup-secrets-1.1.17
   namespace: istio-system
 spec:
   template:
@@ -7275,7 +7275,7 @@ metadata:
     chart: grafana
     heritage: Tiller
     release: istio
-  name: istio-grafana-post-install-1.1.6
+  name: istio-grafana-post-install-1.1.17
   namespace: istio-system
 spec:
   template:
@@ -7348,7 +7348,7 @@ metadata:
     chart: security
     heritage: Tiller
     release: istio
-  name: istio-security-post-install-1.1.6
+  name: istio-security-post-install-1.1.17
   namespace: istio-system
 spec:
   template:
