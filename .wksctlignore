@@ -8,3 +8,6 @@ nvidia/nvidia-device-plugin.yml
 # ignore eksctl ignore file
 .eksctlignore
 
+# not included notebook files
+notebook-image/
+runtime-image/
