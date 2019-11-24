@@ -9,5 +9,8 @@ storageclass/local-path-storage.yaml
 notebook-image/
 runtime-image/
 
+# remove unused metallb-system
+metallb-system/
+
 # also delete other ignore files
 .wksctlignore
