@@ -5,6 +5,9 @@ kustomization.yaml
 # unused storage for EKS
 storageclass/local-path-storage.yaml
 
+# not included notebook files
+notebook-image/
+runtime-image/
+
 # also delete other ignore files
 .wksctlignore
-

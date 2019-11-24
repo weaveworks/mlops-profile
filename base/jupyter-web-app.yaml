@@ -180,6 +180,8 @@ data:
         value: gcr.io/kubeflow-images-public/tensorflow-1.14.0-notebook-cpu:v-base-ef41372-1177829795472347138
         # The list of available standard container Images
         options:
+          - weaveworks/kubeflow-jupyterlab-kale:tensorflow-1.14.0-cpu_kubeflow-v0.7.0_b1
+          - chanwit/kubeflow-jupyterlab-kale:tensorflow-1.14.0-cpu_kubeflow-v0.7.0_b1
           - gcr.io/kubeflow-images-public/tensorflow-1.14.0-notebook-cpu:v0.7.0
           - gcr.io/kubeflow-images-public/tensorflow-1.14.0-notebook-gpu:v0.7.0
           - gcr.io/kubeflow-images-public/tensorflow-2.0.0a0-notebook-cpu:v0.7.0
