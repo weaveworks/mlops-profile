@@ -10,7 +10,7 @@ data:
       protocol: layer2
       addresses:
       - 172.17.0.200-172.17.0.250
-    - name: ignite0
-      protocol: layer2
-      addresses:
-      - 10.61.0.200-10.61.0.250
+#    - name: ignite0
+#      protocol: layer2
+#      addresses:
+#      - 10.61.0.200-10.61.0.250
