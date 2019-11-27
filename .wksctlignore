@@ -2,6 +2,9 @@
 generate.sh
 kustomization.yaml
 
+# unused storage for EKS
+storageclass/gp2.yaml
+
 # no Nvidia on Firekube
 nvidia/nvidia-device-plugin.yml
 
@@ -11,3 +14,9 @@ nvidia/nvidia-device-plugin.yml
 # not included notebook files
 notebook-image/
 runtime-image/
+
+# ignore all gp2 pvc
+base/mysql_pvc_gp2.yaml
+base/katib-controller_pvc_gp2.yaml
+base/metadata_pvc_gp2.yaml
+base/minio_pvc_gp2.yaml

@@ -535,7 +535,7 @@ spec:
               fieldPath: metadata.namespace
         - name: SECRET_NAME
           value: kfserving-webhook-server-secret
-        image: gcr.io/kfserving/kfserving-controller@sha256:180d06026c4dd6c2d3ce4748efc896751b9bb6108b67a9eaa0e50158d6e10f1e
+        image: gcr.io/kfserving/kfserving-controller:0.2.1
         imagePullPolicy: Always
         name: manager
         ports:

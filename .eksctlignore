@@ -14,3 +14,9 @@ metallb-system/
 
 # also delete other ignore files
 .wksctlignore
+
+# ignore all local-path pvc
+base/minio_pvc_local-path.yaml
+base/katib-controller_pvc_local-path.yaml
+base/metadata_pvc_local-path.yaml
+base/mysql_pvc_local-path.yaml
