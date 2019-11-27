@@ -331,6 +331,7 @@ data:
             "defaultImageVersion": "0.2.0",
             "allowedImageVersions": [
                "latest",
+               "0.2.1",
                "0.2.0"
             ]
         },
@@ -535,7 +536,7 @@ spec:
               fieldPath: metadata.namespace
         - name: SECRET_NAME
           value: kfserving-webhook-server-secret
-        image: gcr.io/kfserving/kfserving-controller:latest
+        image: chanwit/kfserving-controller:latest
         imagePullPolicy: Always
         name: manager
         ports:
