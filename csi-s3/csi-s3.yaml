@@ -1,3 +1,4 @@
+---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -53,7 +54,7 @@ spec:
         app: csi-s3
     spec:
       serviceAccount: csi-s3
-      hostNetwork: true
+      hostNetwork: false
       containers:
         - name: driver-registrar
           image: quay.io/k8scsi/csi-node-driver-registrar:v1.1.0
