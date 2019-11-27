@@ -220,7 +220,7 @@ spec:
           value: ""
         - name: PROFILES_KFAM_SERVICE_HOST
           value: profiles-kfam.kubeflow
-        image: gcr.io/kubeflow-images-public/centraldashboard@sha256:4299297b8390599854aa8f77e9eb717db684b32ca9a94a0ab0e73f3f73e5d8b5
+        image: gcr.io/kubeflow-images-public/centraldashboard:list-8-gf5250b01
         imagePullPolicy: IfNotPresent
         name: centraldashboard
         ports:

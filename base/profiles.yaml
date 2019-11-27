@@ -288,7 +288,7 @@ spec:
         - ""
         command:
         - /manager
-        image: gcr.io/kubeflow-images-public/profile-controller@sha256:9b834c9d44f9e4e8d5b9f8f01645afb84d5b3debcb177f3e49eac8ee46ae239d
+        image: gcr.io/kubeflow-images-public/profile-controller:v20191024-v0.7.0-rc.5-12-g956569ba-e3b0c4
         imagePullPolicy: Always
         name: manager
       - args:
@@ -300,7 +300,7 @@ spec:
         - ""
         command:
         - /opt/kubeflow/access-management
-        image: gcr.io/kubeflow-images-public/kfam@sha256:3b0d4be7e59a3fa5ed1d80dccc832312caa94f3b2d36682524d3afc4e45164f0
+        image: gcr.io/kubeflow-images-public/kfam:v20191014-v0.7.0-rc.0-10-gdf3c9366-e3b0c4
         imagePullPolicy: Always
         name: kfam
       serviceAccountName: profiles-controller-service-account
