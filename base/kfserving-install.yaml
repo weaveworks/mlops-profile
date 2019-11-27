@@ -360,7 +360,7 @@ data:
     }
   storageInitializer: |-
     {
-        "image" : "gcr.io/kfserving/storage-initializer:0.2.0"
+        "image" : "gcr.io/kfserving/storage-initializer:latest"
     }
   transformers: |-
     {
@@ -535,7 +535,7 @@ spec:
               fieldPath: metadata.namespace
         - name: SECRET_NAME
           value: kfserving-webhook-server-secret
-        image: gcr.io/kfserving/kfserving-controller:0.2.1
+        image: gcr.io/kfserving/kfserving-controller:latest
         imagePullPolicy: Always
         name: manager
         ports:
