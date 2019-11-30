@@ -327,8 +327,8 @@ data:
             ]
         },
         "sklearn": {
-            "image": "gcr.io/kfserving/sklearnserver",
-            "defaultImageVersion": "0.2.0",
+            "image": "chanwit/sklearnserver",
+            "defaultImageVersion": "latest",
             "allowedImageVersions": [
                "latest",
                "0.2.1",
