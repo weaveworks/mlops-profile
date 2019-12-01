@@ -8,6 +8,7 @@ storageclass/local-path-storage.yaml
 # not included notebook files
 notebook-image/
 runtime-image/
+sklearner-image/
 
 # remove unused metallb-system
 metallb-system/
