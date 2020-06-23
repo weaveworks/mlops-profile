@@ -2,6 +2,12 @@
 
 This is a Kubeflow-based MLOps profile for EKS (with `eksctl`) and Firekube (with `wksctl`).
 
+## Production Notes
+
+It is an experimental profile, and for demonstration only. Secrets are provided in plain texts in this repo so this profile cannot be used directly on production systems.
+
+Please remove all secrets out of this repository and use [Sealed Secrets](https://github.com/bitnami-labs/sealed-secrets) for production setup.
+
 ## Getting Started with Firekube
 
 
