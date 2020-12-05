@@ -16,8 +16,8 @@ metadata:
 ---
 apiVersion: v1
 data:
-  accesskey: bWluaW8=
-  secretkey: bWluaW8xMjM=
+  accesskey: <PUT_YOUR_BASE64_PASSWORD_HERE>
+  secretkey: <PUT_YOUR_BASE64_PASSWORD_HERE>
 kind: Secret
 metadata:
   labels:
