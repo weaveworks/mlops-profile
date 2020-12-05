@@ -64,7 +64,7 @@ metadata:
 ---
 apiVersion: v1
 data:
-  MYSQL_ROOT_PASSWORD: dGVzdA==
+  MYSQL_ROOT_PASSWORD: <PUT_YOUR_BASE64_PASSWORD_HERE>
 kind: Secret
 metadata:
   labels:
