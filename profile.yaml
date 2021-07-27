@@ -1,0 +1,15 @@
+apiVersion: weave.works/v1alpha1
+kind: ProfileDefinition
+metadata:
+  name: mlops
+spec:
+  description: A profile to deploy Kubeflow-based MLOps pipelines
+  artifacts:
+  - name: kfp-cluster-scoped
+    kustomize:
+      path: kfp-cluster-scoped
+  - name: kfp
+    kustomize:
+      path: kfp
+    dependsOn:
+      - name: kfp-cluster-scoped
